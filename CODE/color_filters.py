@@ -3,9 +3,6 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-RESULTS_DIR = os.path.join(BASE_DIR, "RESULTS", "color_filter")
-
 def load_image(image_path):
     """Load an image and convert it to a NumPy array."""
     image = Image.open(image_path).convert('RGB')
@@ -125,25 +122,31 @@ def detect_objects(image, output_dir, scale='normal'):
     print("Helicopter landing site with rectangle saved")
 
 def main():
+    # Directory where images are stored
+    images_dir = os.path.join('..', 'images')
+
+    # Define the images for processing based on scale
     image_info = {
-        'small': ['images/Gura_Portitei_Scara_010.jpg', 'images/Gura_Portitei_Scara_020.jpg'],
-        'medium': ['images/Gura_Portitei_Scara_040.jpg', 'images/Gura_Portitei_Scara_080.jpg'],
-        'large': ['images/Gura_Portitei_Scara_100.jpg']
+        'small': [os.path.join(images_dir, 'Gura_Portitei_Scara_010.jpg'),
+                  os.path.join(images_dir, 'Gura_Portitei_Scara_020.jpg')],
+        'medium': [os.path.join(images_dir, 'Gura_Portitei_Scara_040.jpg'),
+                   os.path.join(images_dir, 'Gura_Portitei_Scara_080.jpg')],
+        'large': [os.path.join(images_dir, 'Gura_Portitei_Scara_100.jpg')]
     }
 
+    # Change the base output directory to "results/color_filter"
+    base_output_dir = os.path.join('..', 'results', 'color_filter')
+
     for scale, image_paths in image_info.items():
-        # Create output directories inside the RESULTS folder
-        output_dir = os.path.join(RESULTS_DIR, f"{scale}_scale")
+        output_dir = os.path.join(base_output_dir, scale + "_scale")
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
         for image_file in image_paths:
-            # Construct the full path to the image
-            image_path = os.path.join(BASE_DIR, image_file)
-            image = load_image(image_path)
+            image = load_image(image_file)
+            image_name = os.path.splitext(os.path.basename(image_file))[0]
             print(f"Processing {image_file} at scale: {scale}")
             detect_objects(image, output_dir, scale)
-
 
 if __name__ == '__main__':
     main()

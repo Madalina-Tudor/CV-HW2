@@ -75,7 +75,7 @@ def detect_edges(image, output_dir, scale, image_name):
     save_image(edges, laplacian_output_path)
     print(f"Laplacian edge detection completed and saved as '{laplacian_output_path}'")
 
-def process_images(image_files, output_subdir, base_output_dir="Edge Detection"):
+def process_images(image_files, output_subdir, base_output_dir="../results/edge_detection"):
     """Process images and apply edge detection filters, saving results in subfolders."""
     # Create the base "Edge Detection" directory if it doesn't exist
     output_dir = os.path.join(base_output_dir, output_subdir)
@@ -91,19 +91,22 @@ def process_images(image_files, output_subdir, base_output_dir="Edge Detection")
         detect_edges(image, output_dir, output_subdir, image_name)
 
 def main():
+    # Directory where images are stored
+    images_dir = os.path.join('..', 'images')
+
     # Define the images for processing based on scale
     image_info = {
         'small_scale': [
-            'images/Gura_Portitei_Scara_010.jpg',
-            'images/Gura_Portitei_Scara_020.jpg',
-            'images/Gura_Portitei_Scara_0025.jpg'
+            os.path.join(images_dir, 'Gura_Portitei_Scara_010.jpg'),
+            os.path.join(images_dir, 'Gura_Portitei_Scara_020.jpg'),
+            os.path.join(images_dir, 'Gura_Portitei_Scara_0025.jpg')
         ],
         'medium_scale': [
-            'images/Gura_Portitei_Scara_040.jpg',
-            'images/Gura_Portitei_Scara_080.jpg'
+            os.path.join(images_dir, 'Gura_Portitei_Scara_040.jpg'),
+            os.path.join(images_dir, 'Gura_Portitei_Scara_080.jpg')
         ],
         'large_scale': [
-            'images/Gura_Portitei_Scara_100.jpg'
+            os.path.join(images_dir, 'Gura_Portitei_Scara_100.jpg')
         ]
     }
 

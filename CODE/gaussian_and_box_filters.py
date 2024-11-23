@@ -64,8 +64,11 @@ def apply_filters(image, filter_sizes, output_dir, scale, image_name):
         save_image(gaussian_filtered, gaussian_output_path)
         print(f"Gaussian filter applied and saved as '{gaussian_output_path}'")
 
-def process_images(image_files, output_subdir, filter_sizes, base_output_dir="gaussian_and_box_filter"):
+def process_images(image_files, output_subdir, filter_sizes):
     """Process images with both box and Gaussian filters and save the results in subfolders."""
+    # Define the base output directory as results/color_filter
+    base_output_dir = os.path.join('..', 'results', 'gaussian_and_boxed_filter')
+
     # Create the base "gaussian_and_box_filter" directory if it doesn't exist
     output_dir = os.path.join(base_output_dir, output_subdir)
     if not os.path.exists(output_dir):
@@ -80,19 +83,22 @@ def process_images(image_files, output_subdir, filter_sizes, base_output_dir="ga
         apply_filters(image, filter_sizes, output_dir, output_subdir, image_name)
 
 def main():
+    # Directory where images are stored
+    images_dir = os.path.join('..', 'images')
+
     # Define the images for processing based on scale
     image_info = {
         'small_scale': [
-            'images/Gura_Portitei_Scara_010.jpg',
-            'images/Gura_Portitei_Scara_020.jpg',
-            'images/Gura_Portitei_Scara_0025.jpg'
+            os.path.join(images_dir, 'Gura_Portitei_Scara_010.jpg'),
+            os.path.join(images_dir, 'Gura_Portitei_Scara_020.jpg'),
+            os.path.join(images_dir, 'Gura_Portitei_Scara_0025.jpg')
         ],
         'medium_scale': [
-            'images/Gura_Portitei_Scara_040.jpg',
-            'images/Gura_Portitei_Scara_080.jpg'
+            os.path.join(images_dir, 'Gura_Portitei_Scara_040.jpg'),
+            os.path.join(images_dir, 'Gura_Portitei_Scara_080.jpg')
         ],
         'large_scale': [
-            'images/Gura_Portitei_Scara_100.jpg'
+            os.path.join(images_dir, 'Gura_Portitei_Scara_100.jpg')
         ]
     }
 
