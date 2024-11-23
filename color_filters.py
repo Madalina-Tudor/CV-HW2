@@ -3,6 +3,9 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+RESULTS_DIR = os.path.join(BASE_DIR, "RESULTS", "color_filter")
+
 def load_image(image_path):
     """Load an image and convert it to a NumPy array."""
     image = Image.open(image_path).convert('RGB')
@@ -129,14 +132,18 @@ def main():
     }
 
     for scale, image_paths in image_info.items():
-        output_dir = f"output_{scale}_scale"
+        # Create output directories inside the RESULTS folder
+        output_dir = os.path.join(RESULTS_DIR, f"{scale}_scale")
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
         for image_file in image_paths:
-            image = load_image(image_file)
+            # Construct the full path to the image
+            image_path = os.path.join(BASE_DIR, image_file)
+            image = load_image(image_path)
             print(f"Processing {image_file} at scale: {scale}")
             detect_objects(image, output_dir, scale)
+
 
 if __name__ == '__main__':
     main()
