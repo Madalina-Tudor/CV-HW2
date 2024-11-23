@@ -16,7 +16,7 @@ Follow the steps below to set up and run the project:
 
 1. **Navigate to the project directory**:
     ```bash
-    cd HW2
+    cd CV-HW2
     ```
 
 2. **Run the `run.bat` file** to automatically create a virtual environment, install dependencies, and run the color filtering script:
